@@ -1,0 +1,7 @@
+.pet {
+    &__list {
+        max-height: 70vh;
+        overflow-y: auto;
+        border: 1px solid $gray-800;
+    }
+}
