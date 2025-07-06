@@ -7,8 +7,6 @@ use App\Http\Requests\swagger\pet\Store as StoreRequest;
 use App\Http\Requests\swagger\pet\Update as UpdateRequest;
 use App\Services\Swagger\Api\Pet\PetInterface;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
 
 class PetController extends Controller
 {
@@ -85,27 +83,42 @@ class PetController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(int $id)
     {
-        //
+        return view("view.pet.updatePut",
+            $this->pet->findById($id)
+        );
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StoreRequest $request, string $id)
     {
-        //
+        $data = $this->pet
+            ->updatePut($request->only(self::VALID_INPUT_STORE));
+
+        if ($data['statusCode'] === 200) {
+            $data['update'] = true;
+        }//TODO tutaj poprawić bo nie wyswietlająsięw szablonie komunikaty
+
+        return redirect(route("pet.edit", [
+            "pet" => $id
+        ]))
+            ->with($data);
     }
 
     public function updatePost(UpdateRequest $request, int $id) {
         $data = $this->pet
             ->updatePost($id, $request->only(self::VALID_INPUT_UPDATE_POST));
 
-        if ($data['statusCode'] === 200) $data['update'] = true;
-
-        return view("view.pet.updatePost", $data);
-
+        if ($data['statusCode'] === 200) {
+            $data['update'] = true;
+            $data['data']['id'] = $id;
+            return view("view.pet.updatePost", $data);
+        }
+        return back()
+            ->with($data);
     }
     public function updateViewPost(int $id) {
 

@@ -17,6 +17,6 @@ return [
     "list" => "List",
     "view" => "View",
     "addNewPet" => "Create new pet",
-    "successUpdate" => "Success update pet",
+    "successUpdate" => "Correctly updated object",
     "updatePost" => "Update Post",
 ];

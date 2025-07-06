@@ -10,4 +10,5 @@ interface PetInterface
 
     public function create(array $data) : array;
     public function updatePost(int $id, array $data) : array;
+    public function updatePut(array $data) : array;
 }

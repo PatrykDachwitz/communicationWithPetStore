@@ -20,5 +20,8 @@ return [
         "updatePost" => [
             "url" => "https://petstore.swagger.io/v2/pet/",
         ],
+        "updatePut" => [
+            "url" => "https://petstore.swagger.io/v2/pet",
+        ],
     ]
 ];

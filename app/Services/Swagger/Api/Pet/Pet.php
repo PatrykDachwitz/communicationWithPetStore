@@ -3,14 +3,9 @@ declare(strict_types=1);
 namespace App\Services\Swagger\Api\Pet;
 
 use App\Services\Swagger\Api\Pet\Action\GetData;
+use App\Services\Swagger\Api\Pet\Action\PutData;
 use App\Services\Swagger\Api\Pet\Action\PostData;
 use Exception;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\MessageBag;
-use Illuminate\Support\ViewErrorBag;
-use Illuminate\Validation\ValidationException;
-use phpDocumentor\Reflection\Types\Self_;
 
 class Pet implements PetInterface
 {
@@ -34,10 +29,17 @@ class Pet implements PetInterface
         405,
         404
     ];
+    const AVAILABLE_STATUS_UPDATE_PET = [
+        200,
+        400,
+        404,
+        405,
+    ];
 
     public function __construct(
-        private GetData $getData,
+        private GetData  $getData,
         private PostData $postData,
+        private PutData  $putData,
     )
     {
 
@@ -120,6 +122,31 @@ class Pet implements PetInterface
                 $response['data'] = __("swagger.invalidValuesForm");
             } elseif ($response['statusCode'] === 404) {
                 $response['data'] = __("swagger.notFound");
+            }
+
+            return $response;
+        } catch (Exception) {
+            return [
+                "statusCode" => 500,
+                "data" => __("swagger.otherError"),
+            ];
+        }
+    }
+
+    public function updatePut(array $data): array
+    {
+        try {
+            $response = $this->putData
+                ->create($data);
+
+            if (!in_array($response['statusCode'], self::AVAILABLE_STATUS_UPDATE_PET)) {
+                throw new Exception("Other error");
+            } elseif ($response['statusCode'] === 405) {
+                $response['data'] = __("swagger.invalidValuesForm");
+            } elseif ($response['statusCode'] === 404) {
+                $response['data'] = __("swagger.notFound");
+            } elseif ($response['statusCode'] === 400) {
+                $response['data'] = __("swagger.invalidIdInput");
             }
 
             return $response;

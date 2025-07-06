@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Services\Swagger\Api\Pet\Action\GetData;
 use App\Services\Swagger\Api\Pet\Action\PostData;
+use App\Services\Swagger\Api\Pet\Action\PutData;
 use App\Services\Swagger\Api\Pet\Pet;
 use App\Services\Swagger\Test\Pet\PetFakePostResponse;
 use App\Services\Swagger\Test\Pet\PetFakeResponse;
@@ -12,7 +13,7 @@ use App\Services\Swagger\Test\Pet\PetFakeResponse;
 
 describe("Test create function in Pet Class", function () {
     it("Test correct download data on api", function () {
-        $pet = new Pet(new GetData(), new PostData());
+        $pet = new Pet(new GetData(), new PostData(), new PutData());
         $testHttp = new PetFakePostResponse();
         $expectedResponse = json_decode($testHttp->getResponseCreateById(1), true);
         $testHttp->activeFakeCreateRouteResponse(200, $testHttp->getResponseCreateById(1));
@@ -27,7 +28,7 @@ describe("Test create function in Pet Class", function () {
 
 
     it("Test unknown status code", function (int $statusCode) {
-        $pet = new Pet(new GetData(), new PostData());
+        $pet = new Pet(new GetData(), new PostData(), new PutData());
         $testHttp = new PetFakePostResponse();
         $testHttp->activeFakeCreateRouteResponse($statusCode);
 
@@ -42,7 +43,7 @@ describe("Test create function in Pet Class", function () {
 
     it("Test invalid status value", function () {
         $responseBody = __("swagger.invalidValuesForm");
-        $pet = new Pet(new GetData(), new PostData());
+        $pet = new Pet(new GetData(), new PostData(), new PutData());
         $testHttp = new PetFakePostResponse();
         $testHttp->activeFakeCreateRouteResponse(405);
 
@@ -58,7 +59,7 @@ describe("Test create function in Pet Class", function () {
 
 describe("Test update post function in Pet Class", function () {
     it("Test correct download data on api", function () {
-        $pet = new Pet(new GetData(), new PostData());
+        $pet = new Pet(new GetData(), new PostData(), new PutData());
         $testHttp = new PetFakePostResponse();
         $expectedResponse = json_decode($testHttp->getResponseUpdate("test"), true);
         $testHttp->activeFakeUpdateRouteResponse(1, 200, $testHttp->getResponseUpdate("test"));
@@ -73,7 +74,7 @@ describe("Test update post function in Pet Class", function () {
 
 
     it("Test unknown status code", function (int $statusCode) {
-        $pet = new Pet(new GetData(), new PostData());
+        $pet = new Pet(new GetData(), new PostData(), new PutData());
         $testHttp = new PetFakePostResponse();
         $testHttp->activeFakeUpdateRouteResponse(1, $statusCode);
 
@@ -88,7 +89,7 @@ describe("Test update post function in Pet Class", function () {
 
     it("Test invalid status value", function () {
         $responseBody = __("swagger.invalidValuesForm");
-        $pet = new Pet(new GetData(), new PostData());
+        $pet = new Pet(new GetData(), new PostData(), new PutData());
         $testHttp = new PetFakePostResponse();
         $testHttp->activeFakeUpdateRouteResponse(1, 405);
 
@@ -100,7 +101,7 @@ describe("Test update post function in Pet Class", function () {
     });
     it("Test not found status value", function () {
         $responseBody = __("swagger.notFound");
-        $pet = new Pet(new GetData(), new PostData());
+        $pet = new Pet(new GetData(), new PostData(), new PutData());
         $testHttp = new PetFakePostResponse();
         $testHttp->activeFakeUpdateRouteResponse(1, 404);
 
