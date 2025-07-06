@@ -8,6 +8,7 @@ use App\Http\Requests\swagger\pet\Update as UpdateRequest;
 use App\Http\Requests\swagger\pet\UploadImage;
 use App\Services\Swagger\Api\Pet\PetInterface;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Request;
 
 class PetController extends Controller
 {
@@ -134,9 +135,12 @@ class PetController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(int $id)
     {
-        //
+        $data = $this->pet->delete($id);
+
+        if ($data['statusCode'] === 200) return redirect(route("pet.index"))->with(["sucess" => "test"]);
+        return redirect()->back();
     }
 
     public function uploadViewImage(int $id) {

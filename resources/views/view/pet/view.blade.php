@@ -15,9 +15,13 @@
                 <a href="{{ route("pet.updateViewPost", [
                     'pet' => $data['id']
                 ]) }}" class="btn btn-outline-warning">@lang('page.updatePost')</a>
-                <a href="{{ route("pet.destroy", [
-                    'pet' => $data['id']
-                ]) }}" class="btn btn-outline-danger">@lang('page.delete')</a>
+                <form action="{{ route('pet.destroy', [
+                'pet' => $data['id']
+                ]) }}" method="post">
+                    @csrf
+                    @method('delete')
+                    <button class="btn btn-outline-danger">@lang('page.delete')</button>
+                </form>
 
             @endisset
 

@@ -45,6 +45,9 @@
                 </tr>
             </thead>
             <tbody>
+            @isset($sucess)
+                {{ dd($sucess) }}
+            @endisset
 
             @foreach($data ?? [] as $item)
                 <tr>

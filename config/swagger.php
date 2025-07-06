@@ -26,5 +26,8 @@ return [
         "uploadImage" => [
             "url" => "https://petstore.swagger.io/v2/pet/petId/uploadImage",
         ],
+        "delete" => [
+            "url" => "https://petstore.swagger.io/v2/pet/",
+        ],
     ]
 ];

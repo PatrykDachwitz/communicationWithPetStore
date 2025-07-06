@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 
+use App\Services\Swagger\Api\Pet\Action\DeleteData;
 use App\Services\Swagger\Api\Pet\Action\GetData;
 use App\Services\Swagger\Api\Pet\Action\PostData;
 use App\Services\Swagger\Api\Pet\Action\PutData;
@@ -12,7 +13,7 @@ use App\Services\Swagger\Test\Pet\PetFakePutResponse;
 
 describe("Test Update function in Pet Class -> put method", function () {
     it("Test correct download data on api", function () {
-        $pet = new Pet(new GetData(), new PostData(), new PutData());
+        $pet = new Pet(new GetData(), new PostData(), new PutData(), new DeleteData());
         $testHttp = new PetFakePutResponse();
         $expectedResponse = json_decode($testHttp->getResponseUpdateById(1), true);
         $testHttp->activeFakeUpdateRouteResponse(200, $testHttp->getResponseUpdateById(1));
@@ -27,7 +28,7 @@ describe("Test Update function in Pet Class -> put method", function () {
 
 
     it("Test unknown status code", function (int $statusCode) {
-        $pet = new Pet(new GetData(), new PostData(), new PutData());
+        $pet = new Pet(new GetData(), new PostData(), new PutData(), new DeleteData());
         $testHttp = new PetFakePutResponse();
         $testHttp->activeFakeUpdateRouteResponse($statusCode);
 
@@ -42,7 +43,7 @@ describe("Test Update function in Pet Class -> put method", function () {
 
     it("Test invalid inputs status value", function () {
         $responseBody = __("swagger.invalidValuesForm");
-        $pet = new Pet(new GetData(), new PostData(), new PutData());
+        $pet = new Pet(new GetData(), new PostData(), new PutData(), new DeleteData());
         $testHttp = new PetFakePutResponse();
         $testHttp->activeFakeUpdateRouteResponse(405);
 
@@ -55,7 +56,7 @@ describe("Test Update function in Pet Class -> put method", function () {
 
     it("Test not found status value", function () {
         $responseBody = __("swagger.notFound");
-        $pet = new Pet(new GetData(), new PostData(), new PutData());
+        $pet = new Pet(new GetData(), new PostData(), new PutData(), new DeleteData());
         $testHttp = new PetFakePutResponse();
         $testHttp->activeFakeUpdateRouteResponse(404);
 
@@ -68,7 +69,7 @@ describe("Test Update function in Pet Class -> put method", function () {
 
     it("Test invalid ID value status value", function () {
         $responseBody = __("swagger.invalidIdInput");
-        $pet = new Pet(new GetData(), new PostData(), new PutData());
+        $pet = new Pet(new GetData(), new PostData(), new PutData(), new DeleteData());
         $testHttp = new PetFakePutResponse();
         $testHttp->activeFakeUpdateRouteResponse(400);
 

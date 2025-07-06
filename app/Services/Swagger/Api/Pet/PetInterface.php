@@ -10,6 +10,8 @@ interface PetInterface
 
     public function findById(int $id) : array;
 
+    public function delete(int $id) : array;
+
     public function create(array $data) : array;
     public function updatePost(int $id, array $data) : array;
     public function updatePut(array $data) : array;

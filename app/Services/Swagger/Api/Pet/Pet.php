@@ -2,6 +2,7 @@
 declare(strict_types=1);
 namespace App\Services\Swagger\Api\Pet;
 
+use App\Services\Swagger\Api\Pet\Action\DeleteData;
 use App\Services\Swagger\Api\Pet\Action\GetData;
 use App\Services\Swagger\Api\Pet\Action\PutData;
 use App\Services\Swagger\Api\Pet\Action\PostData;
@@ -39,11 +40,17 @@ class Pet implements PetInterface
     const AVAILABLE_STATUS_UPLOAD_IMAGE = [
         200,
     ];
+    const AVAILABLE_STATUS_DELETE = [
+        200,
+        400,
+        404,
+    ];
 
     public function __construct(
-        private GetData  $getData,
+        private GetData $getData,
         private PostData $postData,
-        private PutData  $putData,
+        private PutData $putData,
+        private DeleteData $deleteData,
     )
     {
 
@@ -171,6 +178,30 @@ class Pet implements PetInterface
 
             if (!in_array($response['statusCode'], self::AVAILABLE_STATUS_UPLOAD_IMAGE)) {
                 throw new Exception("Other error");
+            }
+
+            return $response;
+        } catch (Exception) {
+            return [
+                "statusCode" => 500,
+                "data" => __("swagger.otherError"),
+            ];
+        }
+    }
+
+    public function delete(int $id) : array
+    {
+
+        try {
+            $response = $this->deleteData
+                ->delete($id);
+
+            if (!in_array($response['statusCode'], self::AVAILABLE_STATUS_DELETE)) {
+                throw new Exception("Other error");
+            } elseif ($response['statusCode'] === 400) {
+                $response['data'] = __("swagger.invalidIdInput");
+            } elseif ($response['statusCode'] === 404) {
+                $response['data'] = __("swagger.notFound");
             }
 
             return $response;
