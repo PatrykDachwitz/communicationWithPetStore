@@ -13,4 +13,7 @@ return [
     "searchByStatus" => "Search by status",
     "search" => "Search",
     "errorPage" => "An error occurred",
+    "browsing" => "You are browsing:",
+    "list" => "List",
+    "view" => "View",
 ];

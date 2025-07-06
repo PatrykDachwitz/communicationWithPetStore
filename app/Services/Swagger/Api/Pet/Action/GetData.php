@@ -2,10 +2,11 @@
 declare(strict_types=1);
 namespace App\Services\Swagger\Api\Pet\Action;
 
+use App\Services\Swagger\Api\BasicAction\FindByIdInterface;
 use App\Services\Swagger\Api\BasicAction\FindByStatusInterface;
 use Illuminate\Support\Facades\Http;
 
-class GetData implements FindByStatusInterface
+class GetData implements FindByStatusInterface, FindByIdInterface
 {
 
     public function findByStatus(string $status): array
@@ -26,5 +27,13 @@ class GetData implements FindByStatusInterface
             "data" => $responseApi->json(),
             "statusCode" => $responseApi->getStatusCode(),
         ];
+    }
+
+    public function findById(int $id): array
+    {
+        $url = config("swagger.pet.findById.url") . $id;
+
+        return $this->getApiResponse($url);
+
     }
 }

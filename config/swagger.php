@@ -10,6 +10,9 @@ return [
                 "sold",
             ],
             "defaultStatus" => "available",
+        ],
+        "findById" => [
+            "url" => "https://petstore.swagger.io/v2/pet/",
         ]
     ]
 ];

@@ -6,6 +6,7 @@ use App\Http\Requests\swagger\pet\Index;
 use App\Services\Swagger\Api\Pet\PetInterface;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class PetController extends Controller
 {
@@ -49,9 +50,12 @@ class PetController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(int $id)
     {
-        //
+
+        return view("view.pet.view",
+            $this->pet->findById($id)
+        );
     }
 
     /**

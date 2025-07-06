@@ -12,6 +12,11 @@ class Pet implements PetInterface
         "200",
         "400",
     ];
+    const AVAILABLE_STATUS_FIND_BY_ID = [
+        "200",
+        "400",
+        "404",
+    ];
 
     public function __construct(
         private GetData $getData
@@ -30,6 +35,30 @@ class Pet implements PetInterface
                 throw new Exception("Other error");
             } elseif ($response['statusCode'] === 400) {
                 $response['data'] = __("swagger.invalidStatusValue");
+            }
+
+            return $response;
+        } catch (Exception) {
+            return [
+                "statusCode" => 500,
+                "data" => __("swagger.otherError"),
+            ];
+        }
+    }
+
+
+    public function findById(int $id): array
+    {
+        try {
+            $response = $this->getData
+                ->findById($id);
+
+            if (!in_array($response['statusCode'], self::AVAILABLE_STATUS_FIND_BY_ID)) {
+                throw new Exception("Other error");
+            } elseif ($response['statusCode'] === 400) {
+                $response['data'] = __("swagger.invalidIdInput");
+            } elseif ($response['statusCode'] === 404) {
+                $response['data'] = __("swagger.notFound");
             }
 
             return $response;

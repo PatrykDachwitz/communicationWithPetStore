@@ -7,10 +7,19 @@ use \Illuminate\Support\Facades\Http;
 class PetFakeResponse
 {
 
+
     public function activeOtherStatus(string $status, int $statusCode) : void {
         $url = config("swagger.pet.findByStatus.url") . "?" . http_build_query([
             "status" => $status
             ]);
+
+
+        Http::fake([
+            $url => Http::response("", $statusCode)
+        ]);
+    }
+    public function activeOtherFindById(int $id, int $statusCode) : void {
+        $url = config("swagger.pet.findById.url") . $id;
 
 
         Http::fake([
@@ -140,15 +149,40 @@ class PetFakeResponse
         }
         return $response;
     }
+    public function getResponseById(int $id) : string {
+
+        return "{
+\"id\": {$id},
+\"category\": {
+\"id\": 0,
+\"name\": \"string\"
+},
+\"name\": \"doggie\",
+\"photoUrls\": [
+\"string\"
+],
+\"tags\": [
+{
+\"id\": 0,
+\"name\": \"string\"
+}
+],
+\"status\": \"available\"
+}";
+    }
     public function activeFakeStatus() : void {
 
-        $urlBasic = config("swagger.pet.findByStatus.url");
+        $urlBasicFindByStatus = config("swagger.pet.findByStatus.url");
+        $urlBasicFindByID = config("swagger.pet.findById.url");
 
 
         Http::fake([
-            $urlBasic . "?status=available" => Http::response($this->getResponseByStatus("available"), 200),
-            $urlBasic . "?status=sold" => Http::response($this->getResponseByStatus("sold"), 200),
-            $urlBasic . "?status=pending" => Http::response($this->getResponseByStatus("pending"), 200),
+            $urlBasicFindByStatus . "?status=available" => Http::response($this->getResponseByStatus("available"), 200),
+            $urlBasicFindByStatus . "?status=sold" => Http::response($this->getResponseByStatus("sold"), 200),
+            $urlBasicFindByStatus . "?status=pending" => Http::response($this->getResponseByStatus("pending"), 200),
+            $urlBasicFindByID . "12" => Http::response($this->getResponseById(12), 200),
+            $urlBasicFindByID . "13" => Http::response($this->getResponseById(13), 200),
+            $urlBasicFindByID . "14" => Http::response($this->getResponseById(14), 200),
         ]);
     }
 }

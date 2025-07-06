@@ -5,4 +5,6 @@ namespace App\Services\Swagger\Api\Pet;
 interface PetInterface
 {
     public function findByStatus(string $status) : array;
+
+    public function findById(int $id) : array;
 }

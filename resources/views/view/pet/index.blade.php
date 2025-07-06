@@ -24,7 +24,7 @@
 
     @if(isset($statusCode) & $statusCode !== 200)
         @include("component.communicat.error", [
-    'message' => "Test"
+    'message' => $data
 ])
     @endif
     <section class="pet__list rounded-1">
