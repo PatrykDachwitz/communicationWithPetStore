@@ -23,5 +23,8 @@ return [
         "updatePut" => [
             "url" => "https://petstore.swagger.io/v2/pet",
         ],
+        "uploadImage" => [
+            "url" => "https://petstore.swagger.io/v2/pet/petId/uploadImage",
+        ],
     ]
 ];

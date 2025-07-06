@@ -6,6 +6,7 @@ use App\Services\Swagger\Api\Pet\Action\GetData;
 use App\Services\Swagger\Api\Pet\Action\PutData;
 use App\Services\Swagger\Api\Pet\Action\PostData;
 use Exception;
+use Illuminate\Http\UploadedFile;
 
 class Pet implements PetInterface
 {
@@ -34,6 +35,9 @@ class Pet implements PetInterface
         400,
         404,
         405,
+    ];
+    const AVAILABLE_STATUS_UPLOAD_IMAGE = [
+        200,
     ];
 
     public function __construct(
@@ -147,6 +151,26 @@ class Pet implements PetInterface
                 $response['data'] = __("swagger.notFound");
             } elseif ($response['statusCode'] === 400) {
                 $response['data'] = __("swagger.invalidIdInput");
+            }
+
+            return $response;
+        } catch (Exception) {
+            return [
+                "statusCode" => 500,
+                "data" => __("swagger.otherError"),
+            ];
+        }
+    }
+
+    public function uploadImage(int $id, array $data, UploadedFile $file): array
+    {
+
+        try {
+            $response = $this->postData
+                ->uploadImage($id, $data, $file);
+
+            if (!in_array($response['statusCode'], self::AVAILABLE_STATUS_UPLOAD_IMAGE)) {
+                throw new Exception("Other error");
             }
 
             return $response;

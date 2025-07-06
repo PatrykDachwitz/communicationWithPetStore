@@ -2,6 +2,8 @@
 declare(strict_types=1);
 namespace App\Services\Swagger\Api\Pet;
 
+use Illuminate\Http\UploadedFile;
+
 interface PetInterface
 {
     public function findByStatus(string $status) : array;
@@ -11,4 +13,5 @@ interface PetInterface
     public function create(array $data) : array;
     public function updatePost(int $id, array $data) : array;
     public function updatePut(array $data) : array;
+    public function uploadImage(int $id, array $data, UploadedFile $file) : array;
 }

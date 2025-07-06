@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\swagger\pet\Index;
 use App\Http\Requests\swagger\pet\Store as StoreRequest;
 use App\Http\Requests\swagger\pet\Update as UpdateRequest;
+use App\Http\Requests\swagger\pet\UploadImage;
 use App\Services\Swagger\Api\Pet\PetInterface;
 use Illuminate\Contracts\View\View;
 
@@ -22,6 +23,9 @@ class PetController extends Controller
     const VALID_INPUT_UPDATE_POST = [
         'name',
         'status',
+    ];
+    const VALID_INPUT_UPDATE_IMAGE = [
+        'additionalMetadata',
     ];
 
     public function __construct(
@@ -133,5 +137,21 @@ class PetController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function uploadViewImage(int $id) {
+        return view("view.pet.updateImage",
+            $this->pet->findById($id)
+        );
+    }
+    public function uploadImage(UploadImage $request, int $id) {
+        $data = $this->pet->uploadImage(
+            $id,
+            $request->only(self::VALID_INPUT_UPDATE_IMAGE),
+            $request->file('file'));
+
+        return redirect(route("pet.uploadImage", [
+            'pet' => $id
+        ]))->with($data);
     }
 }
