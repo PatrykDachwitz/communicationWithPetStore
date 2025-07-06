@@ -1,24 +1,18 @@
 @extends("layout.layout")
 
 
-@section("content")
+
+@section('header')
     <section class="rounded-1 mb-5 d-flex flex-column text-center">
         <h1 class="fs-3 mb-4">@lang('page.addNewPet')</h1>
 
-        <div>
-            <a href="{{ route("pet.create") }}" class="btn btn-outline-success">@lang('page.addNew')</a>
-            <a href="{{ route("pet.index") }}" class="btn btn-outline-success">@lang('page.list')</a>
-
-        </div>
+        @include("component.buttonsAction")
     </section>
+@endsection
 
-    @if(isset($statusCode))
-        @if($statusCode !== 200)
-            @include("component.communicat.error", [
-                'message' => $data
-            ])
-        @endif
-    @endif
+
+@section("content")
+
     <section class="px-3">
         <form class="row w-100 g-3" method="POST" action="{{ route('pet.store') }}">
             @csrf

@@ -19,4 +19,5 @@ return [
     "addNewPet" => "Create new pet",
     "successUpdate" => "Correctly updated object",
     "updatePost" => "Update Post",
+    "uploadImage" => "Upload Image",
 ];

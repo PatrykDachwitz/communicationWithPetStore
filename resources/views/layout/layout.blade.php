@@ -10,6 +10,21 @@
 </head>
 <body>
     <main>
+
+        @yield("header")
+
+        @if(session('errorsCustom'))
+            @include("component.communicat.error", [
+                'message' => $data
+            ])
+        @endif
+
+        @if(session('success'))
+            @include("component.communicat.success", [
+                'message' => __("page.successUpdate")
+            ])
+        @endif
+
         @yield("content")
     </main>
 </body>

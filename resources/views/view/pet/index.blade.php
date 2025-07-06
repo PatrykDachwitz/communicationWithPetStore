@@ -1,35 +1,35 @@
 @extends("layout.layout")
 
 
-@section("content")
-    <section class="rounded-1 mb-5 d-flex flex-column text-center">
-        <h1 class="fs-3 mb-4">@lang('page.searchByStatus')</h1>
-        <form class="d-flex justify-content-center" action="{{ route('pet.index') }}" method="GET">
-            <div class="input-group me-2 w-50">
-                <select class="form-select" id="status" name="status">
-                    @foreach(config("swagger.pet.findByStatus.status") as $availableStatus)
-                        <option value="{{ $availableStatus }}" @if($status === $availableStatus) selected @endif>{{ $availableStatus }}</option>
-                    @endforeach
+@section('header')
+    <section class="mb-5">
+        <div class="rounded-1 d-flex flex-column text-center">
+            <h1 class="fs-3 mb-4">@lang('page.searchByStatus')</h1>
+            <form class="d-flex justify-content-center" action="{{ route('pet.index') }}" method="GET">
+                <div class="input-group me-2 w-50">
+                    <select class="form-select" id="status" name="status">
+                        @foreach(config("swagger.pet.findByStatus.status") as $availableStatus)
+                            <option value="{{ $availableStatus }}" @if($status === $availableStatus) selected @endif>{{ $availableStatus }}</option>
+                        @endforeach
 
                         <option value="test" >test</option>
-                </select>
-                <input class="btn btn-outline-primary" type="submit" value="@lang('page.search')">
+                    </select>
+                    <input class="btn btn-outline-primary" type="submit" value="@lang('page.search')">
 
-            </div>
-            <div>
-                <a class="btn btn-outline-primary" href="{{ route('pet.create') }}" title="@lang('page.addNewTitle')">@lang('page.addNew')</a>
-            </div>
-        </form>
-        @error("status")
-        <h3 class="text-danger fs-4">{{ $message }}</h3>
-        @enderror
+                </div>
+            </form>
+            @error("status")
+            <h3 class="text-danger fs-4">{{ $message }}</h3>
+            @enderror
+        </div>
+
+        <hr/>
+        @include("component.buttonsAction")
     </section>
+@endsection
 
-    @if(isset($statusCode) & $statusCode !== 200)
-        @include("component.communicat.error", [
-    'message' => $data
-])
-    @endif
+@section("content")
+
     <section class="pet__list rounded-1">
         <table class="table">
             <thead class="bg-dark position-sticky top-0">
@@ -45,9 +45,6 @@
                 </tr>
             </thead>
             <tbody>
-            @isset($sucess)
-                {{ dd($sucess) }}
-            @endisset
 
             @foreach($data ?? [] as $item)
                 <tr>

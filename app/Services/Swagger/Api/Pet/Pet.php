@@ -122,7 +122,7 @@ class Pet implements PetInterface
     }
 
     public function updatePost(int $id, array $data): array
-    {//TODO tutaj poprawić dupliakcję kodu
+    {
         try {
             $response = $this->postData
                 ->update($id, $data);

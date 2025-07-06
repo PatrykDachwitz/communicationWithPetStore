@@ -1,45 +1,18 @@
 @extends("layout.layout")
 
+@section('header')
+    <section class="mb-5">
+        <h1 class="fs-3 mb-4">@lang('page.uploadImage')</h1>
+
+        <hr/>
+        @include("component.buttonsAction", [
+            "id" => $data['id'] ?? ''
+        ])
+    </section>
+@endsection
 
 @section("content")
-    <section class="rounded-1 mb-5 d-flex flex-column text-center">
-        <h1 class="fs-3 mb-4">@lang('page.edit'): {{ $data['name'] ?? "" }}</h1>
 
-        <div>
-            <a href="{{ route("pet.create") }}" class="btn btn-outline-success">@lang('page.addNew')</a>
-            <a href="{{ route("pet.index") }}" class="btn btn-outline-success">@lang('page.list')</a>
-            @isset($data['id'])
-                <a href="{{ route("pet.edit", [
-                    'pet' => $data['id']
-                ]) }}" class="btn btn-outline-warning">@lang('page.edit')</a>
-                <a href="{{ route("pet.updateViewPost", [
-                    'pet' => $data['id']
-                ]) }}" class="btn btn-outline-warning">@lang('page.updatePost')</a>
-                <a href="{{ route("pet.destroy", [
-                    'pet' => $data['id']
-                ]) }}" class="btn btn-outline-danger">@lang('page.delete')</a>
-
-            @endisset
-
-        </div>
-    </section>
-
-    @if(isset($statusCode))
-        @if($statusCode !== 200)
-            @include("component.communicat.error", [
-                'message' => $data
-            ])
-        @endif
-    @endif
-
-    @if(isset($update))
-
-        @if($update === true)
-            @include("component.communicat.success", [
-                'message' => __("page.successUpdate")
-            ])
-        @endif
-    @endif
 
     @if(isset($data['id']))
         <section class="px-3">

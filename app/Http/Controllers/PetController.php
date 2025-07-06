@@ -8,7 +8,6 @@ use App\Http\Requests\swagger\pet\Update as UpdateRequest;
 use App\Http\Requests\swagger\pet\UploadImage;
 use App\Services\Swagger\Api\Pet\PetInterface;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Request;
 
 class PetController extends Controller
 {
@@ -66,12 +65,14 @@ class PetController extends Controller
         $data = $this->pet->create($request->only(self::VALID_INPUT_STORE));
 
         if ($data['statusCode'] === 200) {
-            $data['create'] = true;
-            return view("view.pet.view", $data);
+            return redirect(route("pet.show", [
+                "pet" => $data['data']['id']
+            ]))
+                ->with("success", true);
         }
 
         return back()
-            ->with($data);
+            ->with("errorsCustom", $data['data']);
     }
 
     /**
@@ -104,26 +105,32 @@ class PetController extends Controller
             ->updatePut($request->only(self::VALID_INPUT_STORE));
 
         if ($data['statusCode'] === 200) {
-            $data['update'] = true;
-        }//TODO tutaj poprawić bo nie wyswietlająsięw szablonie komunikaty
+            return redirect(route("pet.edit", [
+                "pet" => $id
+            ]))
+                ->with("success", true);
+        }
 
-        return redirect(route("pet.edit", [
-            "pet" => $id
-        ]))
-            ->with($data);
+        return back()
+            ->with("errorsCustom", $data['data']);
     }
 
     public function updatePost(UpdateRequest $request, int $id) {
+
         $data = $this->pet
             ->updatePost($id, $request->only(self::VALID_INPUT_UPDATE_POST));
 
+
+
         if ($data['statusCode'] === 200) {
-            $data['update'] = true;
-            $data['data']['id'] = $id;
-            return view("view.pet.updatePost", $data);
+            return redirect(route("pet.updateViewPost", [
+                "pet" => $id
+            ]))
+                ->with("success", true);
         }
+
         return back()
-            ->with($data);
+            ->with("errorsCustom", $data['data']);
     }
     public function updateViewPost(int $id) {
 
@@ -139,8 +146,14 @@ class PetController extends Controller
     {
         $data = $this->pet->delete($id);
 
-        if ($data['statusCode'] === 200) return redirect(route("pet.index"))->with(["sucess" => "test"]);
-        return redirect()->back();
+
+        if ($data['statusCode'] === 200) {
+            return redirect(route("pet.index"))
+                ->with("success", true);
+        }
+
+        return back()
+            ->with("errorsCustom", $data['data']);
     }
 
     public function uploadViewImage(int $id) {
@@ -154,8 +167,14 @@ class PetController extends Controller
             $request->only(self::VALID_INPUT_UPDATE_IMAGE),
             $request->file('file'));
 
-        return redirect(route("pet.uploadImage", [
-            'pet' => $id
-        ]))->with($data);
+        if ($data['statusCode'] === 200) {
+            return redirect(route("pet.uploadImage", [
+                'pet' => $id
+            ]))
+                ->with("success", true);
+        }
+
+        return back()
+            ->with("errorsCustom", $data['data']);
     }
 }

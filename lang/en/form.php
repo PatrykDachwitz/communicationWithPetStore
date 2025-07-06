@@ -13,4 +13,6 @@ return [
     "tagName" => "Tag name",
     "tagId" => "Tag id",
     "update" => "Update",
+    "additionalMetadata" => "Additional Metadata",
+    "file" => "File",
 ];
