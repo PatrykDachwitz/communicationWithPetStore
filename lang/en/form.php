@@ -7,4 +7,9 @@ return [
     "photoUrl" => "Photo Url",
     "tag" => "Tag",
     "status" => "Status",
+    "create" => "Create",
+    "categoryId" => "Category id",
+    "categoryName" => "Category name",
+    "tagName" => "Tag name",
+    "tagId" => "Tag id",
 ];

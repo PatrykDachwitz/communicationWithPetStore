@@ -16,4 +16,5 @@ return [
     "browsing" => "You are browsing:",
     "list" => "List",
     "view" => "View",
+    "addNewPet" => "Create new pet",
 ];

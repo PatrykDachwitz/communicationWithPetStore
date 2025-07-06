@@ -20,11 +20,22 @@
         </div>
     </section>
 
-    @if(isset($statusCode) & $statusCode !== 200)
-        @include("component.communicat.error", [
-    'message' => $data
-])
+    @if(isset($statusCode))
+        @if($statusCode !== 200)
+            @include("component.communicat.error", [
+                'message' => $data
+                ])
+        @endif
+
     @endif
+    @if(isset($create))
+        @if($create === true)
+            @include("component.communicat.success", [
+                'message' => __("swagger.successCreate")
+            ])
+        @endif
+    @endif
+
     <section class="px-3">
         <form class="row w-100 g-3">
             <div class="col-md-6">

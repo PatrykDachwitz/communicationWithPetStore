@@ -7,4 +7,6 @@ interface PetInterface
     public function findByStatus(string $status) : array;
 
     public function findById(int $id) : array;
+
+    public function create(array $data) : array;
 }
