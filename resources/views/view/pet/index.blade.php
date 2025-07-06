@@ -40,6 +40,7 @@
                     <th scope="col">@lang('page.category')</th>
                     <th scope="col">@lang('page.view')</th>
                     <th scope="col">@lang('page.edit')</th>
+                    <th scope="col">@lang('page.updatePost')</th>
                     <th scope="col">@lang('page.delete')</th>
                 </tr>
             </thead>
@@ -53,6 +54,7 @@
                     <td>{{ $item['category']['name'] ?? __('page.category') }}</td>
                     <td><a title="@lang('page.view')" href="{{ route('pet.show', ['pet' => $item['id']]) }}" class="btn btn-outline-primary">@lang('page.view')</a></td>
                     <td><a title="@lang('page.edit')" href="{{ route('pet.edit', ['pet' => $item['id']]) }}" class="btn btn-outline-warning">@lang('page.edit')</a></td>
+                    <td><a title="@lang('page.edit')" href="{{ route('pet.updateViewPost', ['pet' => $item['id']]) }}" class="btn btn-outline-warning">@lang('page.updatePost')</a></td>
                     <td><a title="@lang('page.delete')" href="{{ route('pet.destroy', ['pet' => $item['id']]) }}" class="btn btn-outline-danger">@lang('page.delete')</a></td>
                 </tr>
             @endforeach

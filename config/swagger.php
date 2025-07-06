@@ -16,6 +16,9 @@ return [
         ],
         "create" => [
             "url" => "https://petstore.swagger.io/v2/pet",
-        ]
+        ],
+        "updatePost" => [
+            "url" => "https://petstore.swagger.io/v2/pet/",
+        ],
     ]
 ];

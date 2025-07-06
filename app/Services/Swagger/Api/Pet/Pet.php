@@ -29,6 +29,12 @@ class Pet implements PetInterface
         200,
     ];
 
+    const AVAILABLE_STATUS_UPDATE_POST = [
+        200,
+        405,
+        404
+    ];
+
     public function __construct(
         private GetData $getData,
         private PostData $postData,
@@ -91,6 +97,29 @@ class Pet implements PetInterface
                 throw new Exception("Other error");
             } elseif ($response['statusCode'] === 405) {
                 $response['data'] = __("swagger.invalidValuesForm");
+            }
+
+            return $response;
+        } catch (Exception) {
+            return [
+                "statusCode" => 500,
+                "data" => __("swagger.otherError"),
+            ];
+        }
+    }
+
+    public function updatePost(int $id, array $data): array
+    {//TODO tutaj poprawić dupliakcję kodu
+        try {
+            $response = $this->postData
+                ->update($id, $data);
+
+            if (!in_array($response['statusCode'], self::AVAILABLE_STATUS_UPDATE_POST)) {
+                throw new Exception("Other error");
+            } elseif ($response['statusCode'] === 405) {
+                $response['data'] = __("swagger.invalidValuesForm");
+            } elseif ($response['statusCode'] === 404) {
+                $response['data'] = __("swagger.notFound");
             }
 
             return $response;

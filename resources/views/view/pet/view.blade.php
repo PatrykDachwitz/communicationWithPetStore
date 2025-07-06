@@ -12,9 +12,13 @@
                 <a href="{{ route("pet.edit", [
                     'pet' => $data['id']
                 ]) }}" class="btn btn-outline-warning">@lang('page.edit')</a>
+                <a href="{{ route("pet.updateViewPost", [
+                    'pet' => $data['id']
+                ]) }}" class="btn btn-outline-warning">@lang('page.updatePost')</a>
                 <a href="{{ route("pet.destroy", [
                     'pet' => $data['id']
                 ]) }}" class="btn btn-outline-danger">@lang('page.delete')</a>
+
             @endisset
 
         </div>

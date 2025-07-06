@@ -12,4 +12,5 @@ return [
     "categoryName" => "Category name",
     "tagName" => "Tag name",
     "tagId" => "Tag id",
+    "update" => "Update",
 ];

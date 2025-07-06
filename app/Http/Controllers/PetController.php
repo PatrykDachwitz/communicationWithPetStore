@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\swagger\pet\Index;
 use App\Http\Requests\swagger\pet\Store as StoreRequest;
+use App\Http\Requests\swagger\pet\Update as UpdateRequest;
 use App\Services\Swagger\Api\Pet\PetInterface;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
@@ -18,6 +19,10 @@ class PetController extends Controller
         'name',
         'photoUrls',
         'tags',
+        'status',
+    ];
+    const VALID_INPUT_UPDATE_POST = [
+        'name',
         'status',
     ];
 
@@ -91,6 +96,22 @@ class PetController extends Controller
     public function update(Request $request, string $id)
     {
         //
+    }
+
+    public function updatePost(UpdateRequest $request, int $id) {
+        $data = $this->pet
+            ->updatePost($id, $request->only(self::VALID_INPUT_UPDATE_POST));
+
+        if ($data['statusCode'] === 200) $data['update'] = true;
+
+        return view("view.pet.updatePost", $data);
+
+    }
+    public function updateViewPost(int $id) {
+
+        return view("view.pet.updatePost",
+            $this->pet->findById($id)
+        );
     }
 
     /**

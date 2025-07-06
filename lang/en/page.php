@@ -6,7 +6,7 @@ return [
     "name" => "Name",
     "status" => "Status",
     "category" => "Category",
-    "edit" => "Edit",
+    "edit" => "Edit Put",
     "delete" => "Delete",
     "addNew" => "Add new",
     "addNewTitle" => "Add new object",
@@ -17,4 +17,6 @@ return [
     "list" => "List",
     "view" => "View",
     "addNewPet" => "Create new pet",
+    "successUpdate" => "Success update pet",
+    "updatePost" => "Update Post",
 ];
