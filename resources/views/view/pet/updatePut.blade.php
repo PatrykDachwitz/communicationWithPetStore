@@ -54,7 +54,7 @@
                     @error("name")
                     <p class="text-danger fs-5">{{ $message }}</p>
                     @enderror
-                </div><!--TODO dodać tu iterację-->
+                </div>
                 @foreach($data['photoUrls'] ?? [] as $key => $photoUrl)
                     <div class="col-6">
                         <label for="photoUrls" class="form-label">@lang("form.photoUrl")</label>
